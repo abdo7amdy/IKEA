@@ -1,3 +1,4 @@
+using IKEA.BLL.Services.DepartmentServices;
 using IKEA.DAL.Persistance.Data;
 using IKEA.DAL.Persistance.Repositories.Departments;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,9 @@ namespace IKEA.PL
             #endregion
 
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
+            builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
+
 
             #region The New Way to Configure Contexts , Also Not Secure Way
             //builder.Services.AddDbContext<ApplicationDbContext>(options =>
