@@ -13,7 +13,7 @@ namespace IKEA.BLL.Services.DepartmentServices
         // DTO => Data Transfer Object 
         IEnumerable<DepartmentDto> GetAllDepartments ();
 
-        DepartmentDetailsDto GetDepartmentById (int id);
+        DepartmentDetailsDto? GetDepartmentById (int id);
 
         int CreateDepartment(CreatedDepartmentDto DepartmentDto);
         int UpdateDepartment(UpdatedDepartmenDto DepartmentDto);

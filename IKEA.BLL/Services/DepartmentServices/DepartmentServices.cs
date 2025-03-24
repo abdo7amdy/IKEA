@@ -60,6 +60,7 @@ namespace IKEA.BLL.Services.DepartmentServices
                     id = department.id,
                     Name = department.Name,
                     Code = department.Code,
+                    Description = department.Description,
                     CreationDate = department.CreationDate,
                     IsDeleted = department.IsDeleted,
                     LastModifiedBy = department.LastModifiedBy,
