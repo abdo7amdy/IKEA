@@ -1,4 +1,5 @@
 ﻿using IKEA.DAL.Models.Departments;
+using IKEA.DAL.Models.Employees;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -30,6 +31,7 @@ namespace IKEA.DAL.Persistance.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-        public DbSet<Department> Departments { get; set; }
-    }
+		public DbSet<Department> Departments { get; set; }
+		public DbSet<Employee> Employees { get; set; }
+	}
 }
