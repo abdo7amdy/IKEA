@@ -1,6 +1,8 @@
 using IKEA.BLL.Services.DepartmentServices;
+using IKEA.BLL.Services.EmployeeServices;
 using IKEA.DAL.Persistance.Data;
 using IKEA.DAL.Persistance.Repositories.Departments;
+using IKEA.DAL.Persistance.Repositories.Employees;
 using Microsoft.EntityFrameworkCore;
 
 namespace IKEA.PL
@@ -25,8 +27,10 @@ namespace IKEA.PL
             #endregion
 
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-
             builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
+
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 
 
             #region The New Way to Configure Contexts , Also Not Secure Way

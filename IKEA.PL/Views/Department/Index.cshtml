@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody class="text-center">
-            @foreach(var dept in Model)
+            @foreach (var dept in Model)
             {
                 <tr>
                     <td>@dept.Code</td>
@@ -34,13 +34,14 @@
                             <i class="fas fa-eye"></i>Details</a>
                     </td>
                     <td>
-                        <a asp-controller="Department" asp-action="Update" asp-route-id="@dept.Id" class="btn btn-success">
+                        <a asp-controller="Department" asp-action="Edit" asp-route-id="@dept.Id" class="btn btn-success">
                             <i class="fas fa-edit"></i>Update
                         </a>
                     </td>
                     <td>
-                        <a asp-controller="Department" asp-action="Delete" asp-route-id="@dept.Id" class="btn btn-danger">
-                            <i class="fas fa-trash"></i>Delete</a>
+                        <button type="button" class="btn btn-danger delete-department-button" data-bs-toggle="modal" data-bs-target="#DeleteDepartment" data-dept-id="@dept.Id" data-dept-name="@dept.Name">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
                     </td>
                 </tr>
             }
@@ -52,4 +53,39 @@ else
     <div class="alert alert-info mt-3">
         <h3>There Is No Departments :(</h3>
     </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteDepartment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Department</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-title fs-5" id="delete-department-name">Are you sure you want to delete this department?</h4>
+            </div>
+            <div class="modal-footer">
+                <form id="delete-department-form" asp-action="Delete" method="post">
+                    <input type="hidden" name="DeptId" id="delete-department-id" value="" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.delete-department-button').click(function () {
+                let deptId = $(this).data('dept-id');
+                let deptName = $(this).data('dept-name');
+                $('#delete-department-id').val(deptId);
+                $('#delete-department-name').text('Are you sure you want to delete the "' + deptName + '" department?');
+            });
+        });
+    </script>
 }
