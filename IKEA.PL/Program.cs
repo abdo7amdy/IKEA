@@ -26,12 +26,15 @@ namespace IKEA.PL
             });
             #endregion
 
+            #region Services | Repositories
+
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 
+            #endregion
 
             #region The New Way to Configure Contexts , Also Not Secure Way
             //builder.Services.AddDbContext<ApplicationDbContext>(options =>

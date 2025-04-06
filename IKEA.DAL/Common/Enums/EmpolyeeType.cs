@@ -9,6 +9,8 @@ namespace IKEA.DAL.Common.Enums
 	public enum EmpolyeeType
 	{
 		PartTime = 1 , 
-		FullTime = 2 
+		FullTime = 2 ,
+		Remote = 3 ,
+		Internship = 4 ,
 	}
 }
