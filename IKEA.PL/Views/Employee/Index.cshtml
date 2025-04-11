@@ -31,27 +31,14 @@
             @foreach (var emp in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(e=>emp.Name)</td>
+                    <td>@Html.DisplayFor(e => emp.Name)</td>
                     <td>@Html.DisplayFor(e => emp.Email)</td>
                     <td>@Html.DisplayFor(e => emp.EmployeeType)</td>
-                    <td>@Html.DisplayFor(e=>emp.Age)</td>
+                    <td>@Html.DisplayFor(e => emp.Age)</td>
                     <td>@Html.DisplayFor(e => emp.Salary)</td>
                     <td>@Html.DisplayFor(e => emp.IsActive)</td>
                     <td>@Html.DisplayFor(e => emp.Gender)</td>
-                    <td>
-                        <a  asp-action="Details" asp-route-id="@emp.Id" class="btn btn-warning">
-                            <i class="fas fa-eye"></i>Details</a>
-                    </td>
-                    <td>
-                        <a  asp-action="Edit" asp-route-id="@emp.Id" class="btn btn-success">
-                            <i class="fas fa-edit"></i>Update
-                        </a>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger delete-employee-button" data-bs-toggle="modal" data-bs-target="#DeleteEmployee" data-emp-id="@emp.Id" data-emp-name="@emp.Name">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </td>
+                    <partial name="_BottunsPartial" model="emp.Id" />
                 </tr>
             }
         </tbody>

@@ -1,5 +1,7 @@
 ﻿using IKEA.BLL.Dto_s.Departments;
 using IKEA.BLL.Services.DepartmentServices;
+using IKEA.DAL.Models.Departments;
+using IKEA.PL.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -54,46 +56,42 @@ namespace IKEA.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreatedDepartmentDto DepartmentDto)
+        public IActionResult Create(DepartmentVM departmentVM)
         {
             //ServerSide Validation 
             if(!ModelState.IsValid)
-                return View(DepartmentDto);
+                return View(departmentVM);
 
             var Message = string.Empty;
             try
             {
+                var DepartmentDto = new CreatedDepartmentDto() 
+                {
+                    Name = departmentVM.Name,
+                    Code = departmentVM.Code,
+                    CreationDate = departmentVM.CreationDate,
+                    Description = departmentVM.Description,
+                };
                 var result = DepartmentServices.CreateDepartment(DepartmentDto);
                 if (result > 0)
                     return RedirectToAction(nameof(Index));
                 else
-                {
                     Message = "Department is not created .";
-                    ModelState.AddModelError(string.Empty, Message);
-                    return View(DepartmentDto);
-                }
+                  
             }
             catch (Exception ex)
             {
                 //Log Exception Kestral
                 logger.LogError(ex, ex.Message);
-                
+
                 //Set Default Message For User 
-                if(environment.IsDevelopment())
-                {
+                if (environment.IsDevelopment())
                     Message = ex.Message;
-                    ModelState.AddModelError(string.Empty, Message);
-                    return View(DepartmentDto);
-                }
                 else
-                {
                     Message = "An Error Occurred While Creation";
-                    ModelState.AddModelError(string.Empty, Message);
-                    return View(DepartmentDto);
-                }
             }
-
-
+            ModelState.AddModelError(string.Empty, Message);
+            return View(departmentVM);
         }
         #endregion
 
@@ -108,7 +106,7 @@ namespace IKEA.PL.Controllers
             if (department == null)
                 return NotFound();
 
-            var MappedDepartment = new UpdatedDepartmenDto()
+            var MappedDepartment = new DepartmentVM()
             {
                 Id = department.id,
                 Name = department.Name,
@@ -121,15 +119,24 @@ namespace IKEA.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(UpdatedDepartmenDto departmenDto)
+        public IActionResult Edit(DepartmentVM departmentVM)
         {
             if (!ModelState.IsValid)
-                return View(departmenDto);
+                return View(departmentVM);
 
             var Message = string.Empty;
             try
             {
-                var result = DepartmentServices.UpdateDepartment(departmenDto);
+                var departmentDto = new UpdatedDepartmenDto()
+                {
+                        Id = departmentVM.Id,
+                        Name = departmentVM.Name,
+                        Code = departmentVM.Code,
+                        Description = departmentVM.Description,
+                        CreationDate = departmentVM.CreationDate
+            
+                };
+                var result = DepartmentServices.UpdateDepartment(departmentDto);
                 if (result > 0)
                     return RedirectToAction(nameof(Index));
                 else
@@ -146,7 +153,7 @@ namespace IKEA.PL.Controllers
 
             ModelState.AddModelError(string.Empty, Message);
 
-            return View(departmenDto);
+            return View(departmentVM);
         }
 
 
