@@ -17,12 +17,12 @@ namespace IKEA.DAL.Persistance.Repositories._Generic
         {
             dbContext = context;
         }
-        public IEnumerable<T> GetAll(bool WithNoTracking = true)
+        public IQueryable<T> GetAll(bool WithNoTracking = true)
         {
             if (WithNoTracking)
-                return dbContext.Set<T>().Where(D => D.IsDeleted == false).AsNoTracking().ToList();
+                return dbContext.Set<T>().AsNoTracking();
 
-            return dbContext.Set<T>().Where(D => D.IsDeleted == false).ToList();
+            return dbContext.Set<T>();
         }
         public T? GetById(int id)
         {

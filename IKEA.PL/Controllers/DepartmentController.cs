@@ -53,6 +53,7 @@ namespace IKEA.PL.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(CreatedDepartmentDto DepartmentDto)
         {
             //ServerSide Validation 
@@ -119,6 +120,7 @@ namespace IKEA.PL.Controllers
             return View(MappedDepartment);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(UpdatedDepartmenDto departmenDto)
         {
             if (!ModelState.IsValid)
@@ -162,6 +164,7 @@ namespace IKEA.PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete (int DeptId)
         {
             var Message = string.Empty;
