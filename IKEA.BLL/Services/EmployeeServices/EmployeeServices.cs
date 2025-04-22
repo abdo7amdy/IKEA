@@ -1,6 +1,7 @@
 ﻿using IKEA.BLL.Dto_s.Employees;
 using IKEA.DAL.Models.Employees;
 using IKEA.DAL.Persistance.Repositories.Employees;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace IKEA.BLL.Services.EmployeeServices
             var Employees = Repository.GetAll();
 
             var FilteredEmployees = Employees.Where(E => E.IsDeleted == false);
-            var AfterFilteration = FilteredEmployees.Select(E => new EmployeeDto()
+            var AfterFilteration = FilteredEmployees.Include(E=>E.Department).Select(E => new EmployeeDto()
             {
                 Id = E.id,
                 Name = E.Name , 
@@ -32,7 +33,8 @@ namespace IKEA.BLL.Services.EmployeeServices
                 IsActive = E.IsActive ,
                 Email = E.Email ,
                 Gender = E.Gender ,
-                EmployeeType = E.EmpolyeeType
+                EmployeeType = E.EmpolyeeType,
+                Department = E.Department.Name ?? "N/A"
 
             });
             return AfterFilteration.ToList();
@@ -68,6 +70,7 @@ namespace IKEA.BLL.Services.EmployeeServices
         {
             var employee = new Employee()
             {
+                DepartmentId = EmployeeDto.DepartmenId,
                 Name = EmployeeDto.Name,
                 Age = EmployeeDto.Age,
                 Salary = EmployeeDto.Salary,
@@ -89,6 +92,7 @@ namespace IKEA.BLL.Services.EmployeeServices
         {
             var employee = new Employee()
             {
+                DepartmentId = EmployeeDto.DepartmenId,
                 id = EmployeeDto.id ,
                 Name = EmployeeDto.Name,
                 Age = EmployeeDto.Age,

@@ -1,4 +1,5 @@
 ﻿using IKEA.DAL.Common.Enums;
+using IKEA.DAL.Models.Departments;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,9 @@ namespace IKEA.DAL.Models.Employees
 		public DateOnly HiringDate { get; set; }
 		public Gender Gender { get; set; }
 		public EmpolyeeType EmpolyeeType { get; set; }
+		public int? DepartmentId { get; set; }
+		// Navigational Property [One]
+		public virtual Department? Department { get; set; }
 
 	}
 }

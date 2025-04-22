@@ -1,6 +1,7 @@
 ﻿using IKEA.DAL.Common.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,10 @@ namespace IKEA.BLL.Dto_s.Employees
         public DateOnly HiringDate { get; set; }
         public Gender Gender { get; set; }
         public EmpolyeeType EmpolyeeType { get; set; }
+
+        [Display(Name = "Department")]
+        public int? DepartmenId { get; set; }
+
 
     }
 }

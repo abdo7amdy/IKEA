@@ -14,7 +14,7 @@ namespace IKEA.PL.Controllers
         private readonly ILogger<EmployeeController> logger;
         private readonly IWebHostEnvironment environment;
 
-        public EmployeeController(IEmployeeServices employeeServices, ILogger<EmployeeController> logger, IWebHostEnvironment environment)
+        public EmployeeController(IEmployeeServices employeeServices,IDepartmentServices departmentServices, ILogger<EmployeeController> logger, IWebHostEnvironment environment)
         {
             this.employeeServices = employeeServices;
             this.logger = logger;
@@ -126,6 +126,7 @@ namespace IKEA.PL.Controllers
                 EmpolyeeType = employee.EmpolyeeType,
                 IsActive = employee.IsActive
             };
+
             return View(MappedEmployee);
         }
 

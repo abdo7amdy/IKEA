@@ -22,5 +22,8 @@ namespace IKEA.BLL.Dto_s.Employees
         public Gender Gender { get; set; }
         public EmpolyeeType EmpolyeeType { get; set; }
 
+        [Display(Name = "Department")]
+        public int? DepartmenId { get; set;}
+
     }
 }

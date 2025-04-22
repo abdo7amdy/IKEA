@@ -15,5 +15,7 @@ namespace IKEA.PL.ViewModel
         public DateOnly HiringDate { get; set; }
         public Gender Gender { get; set; }
         public EmpolyeeType EmpolyeeType { get; set; }
+        public int? DepartmenId { get; set; }
+
     }
 }

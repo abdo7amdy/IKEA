@@ -22,7 +22,7 @@ namespace IKEA.PL
             #region The best Way to Configure Contexts 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+                options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
             });
             #endregion
 

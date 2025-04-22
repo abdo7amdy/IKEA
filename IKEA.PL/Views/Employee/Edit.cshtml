@@ -1,6 +1,10 @@
 ﻿@model EmployeeVM
+@inject IDepartmentServices departmentServices
+
 @{
     ViewData["Title"] = "Edit Employee";
+    var departments = new SelectList(departmentServices.GetAllDepartments(), nameof(DepartmentDto.Id), nameof(DepartmentDto.Name));
+
 }
 
 
@@ -10,6 +14,12 @@
     <form asp-action="Edit" method="post" class="row col-6">
         <div asp-validation-summary="ModelOnly"></div>
         <partial name="Partials/_CreateEditPartial" model="@Model" />
+        <div class="form-group col-6">
+            <label  asp-for="DepartmenId"></label>
+            <select asp-for="DepartmenId" asp-items="@departments" class="form-control">
+                <option value="@null">Choose ..</option>
+            </select>
+        </div>
         <div class="mt-4">
             <input type="submit" value="Update" class="btn btn-success" /> ||
             <a asp-action="Index" class="btn btn-secondary">Back To List</a>
