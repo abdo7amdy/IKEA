@@ -12,7 +12,7 @@ namespace IKEA.BLL.Services.EmployeeServices
     {
         //Services Signature
         // DTO => Data Transfer Object 
-        IEnumerable<EmployeeDto> GetAllEmployees();
+        IEnumerable<EmployeeDto> GetAllEmployees(string search);
 
         EmployeeDetailsDto? GetEmployeeById(int id);
 
