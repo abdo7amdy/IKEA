@@ -2,7 +2,17 @@
 @{
     ViewData["Title"] = "Departments";
 }
+<@* div class="alert alert-info">
+     <h5>@ViewData["Message"]</h5> 
+     <h5>@ViewBag.Message</h5> 
 
+</div> *@
+@if(!string.IsNullOrEmpty(TempData["Message"] as string))
+{
+       <div class="alert alert-success mb-3" >
+           <h5>@TempData["Message"]</h5>
+       </div>
+}
 <h1>Departments</h1>
 <br />
 <br />
