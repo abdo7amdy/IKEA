@@ -1,4 +1,4 @@
-namespace IKEA.PL.Models
+namespace IKEA.PL.ViewModel
 {
     public class ErrorViewModel
     {

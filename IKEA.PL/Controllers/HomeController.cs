@@ -1,4 +1,4 @@
-using IKEA.PL.Models;
+using IKEA.PL.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
