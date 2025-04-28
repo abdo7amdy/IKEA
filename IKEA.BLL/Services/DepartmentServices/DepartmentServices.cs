@@ -1,6 +1,7 @@
 ﻿using IKEA.BLL.Dto_s.Departments;
 using IKEA.DAL.Models.Departments;
 using IKEA.DAL.Persistance.Repositories.Departments;
+using IKEA.DAL.Persistance.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,15 @@ namespace IKEA.BLL.Services.DepartmentServices
         // Repository Pattern
 
         
-        private IDepartmentRepository repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public DepartmentServices(IDepartmentRepository _repository)
+        public DepartmentServices(IUnitOfWork unitOfWork)
         {
-            repository = _repository;
+            this.unitOfWork = unitOfWork;
         }
         public IEnumerable<DepartmentDto> GetAllDepartments()
         {
-            var Departments = repository.GetAll().Where(D => D.IsDeleted == false).Select(dept => new DepartmentDto()
+            var Departments = unitOfWork.DepartmentRepository.GetAll().Where(D => D.IsDeleted == false).Select(dept => new DepartmentDto()
             {
                 Id = dept.id,
                 Name = dept.Name,
@@ -53,7 +54,7 @@ namespace IKEA.BLL.Services.DepartmentServices
 
         public DepartmentDetailsDto? GetDepartmentById(int id)
         {
-            var department = repository.GetById(id);
+            var department = unitOfWork.DepartmentRepository.GetById(id);
 
             if (department is not null)
                 return new DepartmentDetailsDto()
@@ -87,7 +88,8 @@ namespace IKEA.BLL.Services.DepartmentServices
                 LastModifiedBy =1 ,
                 LastModifiedOn = DateTime.Now 
             };
-            return repository.Add(CreatedDepartment);
+            unitOfWork.DepartmentRepository.Add(CreatedDepartment);
+            return unitOfWork.Complete();
         }
         public int UpdateDepartment(UpdatedDepartmenDto DepartmentDto)
         {
@@ -102,14 +104,18 @@ namespace IKEA.BLL.Services.DepartmentServices
                 LastModifiedOn = DateTime.Now
             };
 
-            return repository.Update(UpdatedDepartment);
+            unitOfWork.DepartmentRepository.Update(UpdatedDepartment);
+            return unitOfWork.Complete();
         }
         public bool DeleteDepartment(int id)
         {
-            var deprtment = repository.GetById(id);
+            var deprtment = unitOfWork.DepartmentRepository.GetById(id);
 
             if (deprtment != null)
-                return repository.Delete(deprtment)>0;
+                unitOfWork.DepartmentRepository.Delete(deprtment);
+            var result = unitOfWork.Complete();
+            if (result > 0)
+                return true;
             else
                 return false;
         }    
