@@ -1,0 +1,14 @@
+﻿@model DepartmentDetailsDto
+@{
+    ViewData["Title"] = "Delete";
+}
+<h4>Are You Sure , you want to Delete @Model.Name Department ..!?</h4>
+<partial name="Partials/_DeleteDetailsPartial" model="@Model" />
+
+<form asp-action="Delete" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mt-4">
+        <input type="submit" value="Delete" asp-route-DeptId="@Model.id" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Back To list</a>
+    </div>
+</form>

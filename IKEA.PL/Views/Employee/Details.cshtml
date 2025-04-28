@@ -1,0 +1,12 @@
+﻿@model EmployeeDetailsDto
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>@Model.Name Details :)</h3>
+
+<partial name="Partials/_DeleteDetailsPartial" model="Model"/>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Back To list</a>
+    </div>

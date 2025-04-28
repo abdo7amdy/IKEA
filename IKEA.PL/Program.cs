@@ -1,5 +1,10 @@
+using IKEA.BLL.Services.DepartmentServices;
+using IKEA.BLL.Services.EmployeeServices;
 using IKEA.DAL.Persistance.Data;
 using IKEA.DAL.Persistance.Repositories.Departments;
+using IKEA.DAL.Persistance.Repositories.Employees;
+using IKEA.DAL.Persistance.UnitOfWork;
+using IKEA.PL.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace IKEA.PL
@@ -19,11 +24,23 @@ namespace IKEA.PL
             #region The best Way to Configure Contexts 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+                options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
             });
             #endregion
 
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            #region Services | Repositories | Unit Of Work
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
+
+            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
+
+            builder.Services.AddAutoMapper(M=>M.AddProfile(typeof(MappingProfile)));
+
+            #endregion
 
             #region The New Way to Configure Contexts , Also Not Secure Way
             //builder.Services.AddDbContext<ApplicationDbContext>(options =>
