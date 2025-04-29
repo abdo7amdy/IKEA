@@ -22,6 +22,7 @@ namespace IKEA.BLL.Dto_s.Employees
         public EmpolyeeType EmpolyeeType { get; set; }
         
         public string? Department { get; set; }
+        public string? ImageName { get; set; }
 
         #region Administration
         public int CreatedBy { get; set; }

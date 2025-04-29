@@ -13,6 +13,7 @@
 
     <form asp-action="Edit" method="post" class="row col-6">
         <div asp-validation-summary="ModelOnly"></div>
+        <input hidden asp-for="ImageName"/>
         <partial name="Partials/_CreateEditPartial" model="@Model" />
         <div class="form-group col-6">
             <label  asp-for="DepartmenId"></label>

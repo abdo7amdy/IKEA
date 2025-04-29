@@ -16,6 +16,8 @@ namespace IKEA.PL.ViewModel
         public Gender Gender { get; set; }
         public EmpolyeeType EmpolyeeType { get; set; }
         public int? DepartmenId { get; set; }
+        public string? ImageName { get; set; }
+        public IFormFile? Image {  get; set; }
 
     }
 }

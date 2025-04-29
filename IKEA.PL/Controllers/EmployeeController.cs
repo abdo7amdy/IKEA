@@ -76,6 +76,7 @@ namespace IKEA.PL.Controllers
                     EmpolyeeType = EmployeeVM.EmpolyeeType,
                     Gender = EmployeeVM.Gender,
                     HiringDate = EmployeeVM.HiringDate,
+                    
                 };
 
                 var result = employeeServices.CreateEmployee(DepartmentDto);
@@ -125,7 +126,8 @@ namespace IKEA.PL.Controllers
                 Salary = employee.Salary,
                 Gender = employee.Gender,
                 EmpolyeeType = employee.EmpolyeeType,
-                IsActive = employee.IsActive
+                IsActive = employee.IsActive,
+                ImageName = employee.ImageName
             };
 
             return View(MappedEmployee);
