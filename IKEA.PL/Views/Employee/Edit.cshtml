@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Edit Employee";
-    var departments = new SelectList(departmentServices.GetAllDepartments(), nameof(DepartmentDto.Id), nameof(DepartmentDto.Name));
+    var departments = new SelectList(await departmentServices.GetAllDepartments(), nameof(DepartmentDto.Id), nameof(DepartmentDto.Name));
 
 }
 
