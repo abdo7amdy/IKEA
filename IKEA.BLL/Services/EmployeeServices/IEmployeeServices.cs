@@ -12,12 +12,12 @@ namespace IKEA.BLL.Services.EmployeeServices
     {
         //Services Signature
         // DTO => Data Transfer Object 
-        IEnumerable<EmployeeDto> GetAllEmployees(string search);
+        Task<IEnumerable<EmployeeDto>> GetAllEmployees(string search);
 
-        EmployeeDetailsDto? GetEmployeeById(int id);
+        Task<EmployeeDetailsDto>? GetEmployeeById(int id);
 
-        int CreateEmployee(CreatedEmployeeDto EmployeeDto);
-        int UpdateEmployee(UpdatedEmployeeDto EmployeeDto);
-        bool DeleteEmployee(int id);
+        Task<int> CreateEmployee(CreatedEmployeeDto EmployeeDto);
+        Task<int> UpdateEmployee(UpdatedEmployeeDto EmployeeDto);
+        Task<bool> DeleteEmployee(int id);
     }
 }

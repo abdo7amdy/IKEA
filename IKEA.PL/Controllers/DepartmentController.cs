@@ -29,9 +29,9 @@ namespace IKEA.PL.Controllers
 
         #region Index
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var Departments = DepartmentServices.GetAllDepartments();
+            var Departments =await DepartmentServices.GetAllDepartments();
             // ViewData is a Dictionary => Key , Value
             //ViewData["Message"] = "Hello From ViewData";
             //ViewBag.Message = "Hello From ViewBag";
@@ -44,11 +44,11 @@ namespace IKEA.PL.Controllers
 
         #region Details
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
                 return BadRequest();
-            var department = DepartmentServices.GetDepartmentById(id.Value);
+            var department =await DepartmentServices.GetDepartmentById(id.Value);
             
             if (department is null)
                 return NotFound();
@@ -65,7 +65,7 @@ namespace IKEA.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(DepartmentVM departmentVM)
+        public async Task<IActionResult> Create(DepartmentVM departmentVM)
         {
             //ServerSide Validation 
             if(!ModelState.IsValid)
@@ -83,7 +83,7 @@ namespace IKEA.PL.Controllers
                 //    CreationDate = departmentVM.CreationDate,
                 //    Description = departmentVM.Description,
                 //};
-                var result = DepartmentServices.CreateDepartment(DepartmentDto);
+                var result =await DepartmentServices.CreateDepartment(DepartmentDto);
                 if (result > 0)
                 {
                     TempData["Message"] =$"{DepartmentDto.Name} Department is created ";
@@ -111,11 +111,11 @@ namespace IKEA.PL.Controllers
 
         #region Update
         [HttpGet]
-        public IActionResult Edit(int? Id)
+        public async Task<IActionResult> Edit(int? Id)
         {
             if (Id is null)
                 return BadRequest();
-            var department = DepartmentServices.GetDepartmentById(Id.Value);
+            var department =await DepartmentServices.GetDepartmentById(Id.Value);
 
             if (department == null)
                 return NotFound();
@@ -135,7 +135,7 @@ namespace IKEA.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(DepartmentVM departmentVM)
+        public async Task<IActionResult> Edit(DepartmentVM departmentVM)
         {
             if (!ModelState.IsValid)
                 return View(departmentVM);
@@ -153,7 +153,7 @@ namespace IKEA.PL.Controllers
                 //        CreationDate = departmentVM.CreationDate
 
                 //};
-                var result = DepartmentServices.UpdateDepartment(departmentDto);
+                var result =await DepartmentServices.UpdateDepartment(departmentDto);
                 if (result > 0)
                     return RedirectToAction(nameof(Index));
                 else
@@ -178,10 +178,10 @@ namespace IKEA.PL.Controllers
 
         #region Delete
         [HttpGet]
-        public IActionResult Delete (int? Id )
+        public async Task<IActionResult> Delete (int? Id )
         {
             if (Id == null) return BadRequest();
-            var department = DepartmentServices.GetDepartmentById(Id.Value);
+            var department =await DepartmentServices.GetDepartmentById(Id.Value);
             if (department is null) return NotFound();
 
             return View(department);
@@ -189,13 +189,13 @@ namespace IKEA.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete (int DeptId)
+        public async Task<IActionResult> Delete (int DeptId)
         {
             var Message = string.Empty;
 
             try
             {
-                var IsDeleted = DepartmentServices.DeleteDepartment(DeptId);
+                var IsDeleted =await DepartmentServices.DeleteDepartment(DeptId);
                 if (IsDeleted) return RedirectToAction(nameof(Index));
 
                 Message = " Department Is Not Deleted .";
