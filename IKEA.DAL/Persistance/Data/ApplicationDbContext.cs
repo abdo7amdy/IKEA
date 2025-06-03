@@ -1,5 +1,8 @@
 ﻿using IKEA.DAL.Models.Departments;
 using IKEA.DAL.Models.Employees;
+using IKEA.DAL.Models.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -11,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace IKEA.DAL.Persistance.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         // Dependency Injection 
         // Department = Depend on > Context = Depend on > Options
@@ -29,6 +32,7 @@ namespace IKEA.DAL.Persistance.Data
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 		public DbSet<Department> Departments { get; set; }

@@ -3,10 +3,12 @@ using IKEA.BLL.Dto_s.Employees;
 using IKEA.BLL.Services.DepartmentServices;
 using IKEA.BLL.Services.EmployeeServices;
 using IKEA.PL.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IKEA.PL.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         #region Services - DI

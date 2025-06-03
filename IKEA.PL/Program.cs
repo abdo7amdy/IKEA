@@ -1,11 +1,14 @@
 using IKEA.BLL.Common.Attachments;
 using IKEA.BLL.Services.DepartmentServices;
 using IKEA.BLL.Services.EmployeeServices;
+using IKEA.DAL.Models.Identity;
 using IKEA.DAL.Persistance.Data;
 using IKEA.DAL.Persistance.Repositories.Departments;
 using IKEA.DAL.Persistance.Repositories.Employees;
 using IKEA.DAL.Persistance.UnitOfWork;
 using IKEA.PL.Mapping;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace IKEA.PL
@@ -18,7 +21,7 @@ namespace IKEA.PL
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            #region Configure Services
+            #region Configure Services | DbContext_Options(ConnectionStrings)
 
             builder.Services.AddControllersWithViews();
 
@@ -30,6 +33,23 @@ namespace IKEA.PL
             #endregion
 
             #region Services | Repositories | Unit Of Work
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>((options) =>
+            {
+				options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+				options.Password.RequireDigit = true;
+				options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+				options.Password.RequiredUniqueChars = 1;
+
+                options.User.RequireUniqueEmail = true;
+
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(3);
+
+			}).AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -66,7 +86,14 @@ namespace IKEA.PL
 
             #endregion
 
-            var app = builder.Build();
+            builder.Services.AddAuthentication().AddCookie(options =>
+            {
+                options.LoginPath = "/Account/LogIn";
+                options.AccessDeniedPath = "/Home/Error";
+                options.ExpireTimeSpan = TimeSpan.FromDays(3);
+                options.ForwardSignOut = "/Account/LogIn";
+            });
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             #region Configure Pipelines (Middle Wares)
@@ -82,16 +109,16 @@ namespace IKEA.PL
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+        	pattern: "{controller=Account}/{action=Login}/{id?}");
 
-            #endregion
+			#endregion
 
-            app.Run();
+			app.Run();
         }
     }
 }

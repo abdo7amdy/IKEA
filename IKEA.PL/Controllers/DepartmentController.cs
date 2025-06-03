@@ -3,13 +3,15 @@ using IKEA.BLL.Dto_s.Departments;
 using IKEA.BLL.Services.DepartmentServices;
 using IKEA.DAL.Models.Departments;
 using IKEA.PL.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace IKEA.PL.Controllers
 {
-    public class DepartmentController : Controller
+	[Authorize]
+	public class DepartmentController : Controller
     {
         #region Services | Dependency Injection
         private readonly IDepartmentServices DepartmentServices;
