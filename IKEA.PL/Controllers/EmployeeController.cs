@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IKEA.PL.Controllers
 {
-    [Authorize]
     public class EmployeeController : Controller
     {
         #region Services - DI

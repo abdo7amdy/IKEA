@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace IKEA.PL.Controllers
 {
-	[Authorize]
 	public class DepartmentController : Controller
     {
         #region Services | Dependency Injection
