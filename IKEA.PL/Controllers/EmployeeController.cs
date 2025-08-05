@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IKEA.PL.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         #region Services - DI
@@ -35,6 +36,7 @@ namespace IKEA.PL.Controllers
 
         #region Details
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)

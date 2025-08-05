@@ -10,7 +10,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace IKEA.PL.Controllers
 {
-	public class DepartmentController : Controller
+    [Authorize]
+    public class DepartmentController : Controller
     {
         #region Services | Dependency Injection
         private readonly IDepartmentServices DepartmentServices;
@@ -45,6 +46,7 @@ namespace IKEA.PL.Controllers
 
         #region Details
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)

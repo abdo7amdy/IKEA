@@ -11,13 +11,15 @@
 
 			<div class="wthree-text">
 				<label class="anim">
-					<input type="checkbox" class="checkbox" asp-for="RemmemberMe" required="">
-					<span>Remmember Me</span>
+					<input type="checkbox" class="checkbox" asp-for="RememberMe" required="">
+					<span>Remember Me</span>
 				</label>
+				<p><a asp-action="ForgetPassword"> Forget Password !</a></p>
 				<div class="clear"> </div>
 			</div>
 			<input type="submit" value="LOG IN">
 		</form>
-		<p>Create new account ..!? <a href="SignUp"> Register Now!</a></p>
+		<div asp-validation-summary="All" class="text-danger"></div>
+		<p>If you don't have an Account? <a asp-action="SignUp"> Register Now !</a></p>
 	</div>
 </div>

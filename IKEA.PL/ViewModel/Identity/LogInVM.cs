@@ -10,6 +10,6 @@ namespace IKEA.PL.ViewModel.Identity
 		public string Password { get; set; } = null!;
 
 		[Display(Name = "Remmember Me")]
-		public bool RemmemberMe { get; set; }
+		public bool RememberMe { get; set; }
 	}
 }

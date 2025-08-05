@@ -10,6 +10,7 @@ using IKEA.PL.Mapping;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace IKEA.PL
 {
@@ -42,14 +43,20 @@ namespace IKEA.PL
 				options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
 				options.Password.RequiredUniqueChars = 1;
-
                 options.User.RequireUniqueEmail = true;
-
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(3);
 
 			}).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddAuthentication().AddCookie(options =>
+            {
+                options.LoginPath = "/Account/LogIn";
+                options.AccessDeniedPath = "/Home/Error";
+                options.ExpireTimeSpan = TimeSpan.FromDays(2);
+                options.ForwardSignOut = "/Account/LogIn";
+            });
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -86,13 +93,6 @@ namespace IKEA.PL
 
             #endregion
 
-            builder.Services.AddAuthentication().AddCookie(options =>
-            {
-                options.LoginPath = "/Account/LogIn";
-                options.AccessDeniedPath = "/Home/Error";
-                options.ExpireTimeSpan = TimeSpan.FromDays(3);
-                options.ForwardSignOut = "/Account/LogIn";
-            });
 			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -114,7 +114,7 @@ namespace IKEA.PL
 
             app.MapControllerRoute(
                 name: "default",
-        	pattern: "{controller=Account}/{action=Login}/{id?}");
+        	pattern: "{controller=Home}/{action=Index}/{id?}");
 
 			#endregion
 

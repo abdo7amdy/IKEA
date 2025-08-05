@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IKEA.PL.Controllers
 {
+	
 	public class AccountController : Controller
 	{
 		#region Services
@@ -18,7 +19,7 @@ namespace IKEA.PL.Controllers
 		}
         #endregion
 
-        #region SignIn
+        #region SignUp
         [HttpGet]
 		public IActionResult SignUp()
 		{
@@ -76,7 +77,7 @@ namespace IKEA.PL.Controllers
 
 			if (user is not null)
 			{
-				var Result = await signInManager.PasswordSignInAsync(user, logInVM.Password,logInVM.RemmemberMe,true);
+				var Result = await signInManager.PasswordSignInAsync(user, logInVM.Password,logInVM.RememberMe,true);
 
 				if (Result.IsNotAllowed)
 					ModelState.AddModelError(string.Empty, "your account is not confirmed"); 
@@ -85,7 +86,7 @@ namespace IKEA.PL.Controllers
 					ModelState.AddModelError(string.Empty, "your account is locked");
 
 				if (Result.Succeeded)
-					return RedirectToAction(nameof(HomeController.Index),"Home");
+					return RedirectToAction(nameof(HomeController.Index), "Home");
 			}
 			ModelState.AddModelError(string.Empty, "Invalid Log In Attempt ..!");
 			return View(logInVM);
@@ -98,6 +99,14 @@ namespace IKEA.PL.Controllers
 		{
 			await signInManager.SignOutAsync();
 			return RedirectToAction(nameof(LogIn));
+		}
+		#endregion
+
+		#region ForgetPassword
+		[HttpGet]
+		public IActionResult ForgetPassword()
+		{
+			return View();
 		}
 		#endregion
 	}
